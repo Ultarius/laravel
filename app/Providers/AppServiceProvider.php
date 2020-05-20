@@ -13,7 +13,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        //  Make sure on shared hosting correct path is used.
+        if ($this->app->environment() === 'production') {
+            $this->app->bind('path.public', function () {
+                return base_path() . '/../public_html';
+            });
+        }
     }
 
     /**
